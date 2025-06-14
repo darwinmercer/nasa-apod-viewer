@@ -3,39 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NASA Picture of the Day</title>
+    <title>NASA APOD Interface</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="assets/NASA_logo.svg">
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <h1>NASA Picture of the Day</h1>
+    <video autoplay loop muted playsinline class="background-video">
+        <source src="assets/earth.mp4" type="video/mp4">
+    </video>
+
+    <div class="app-container">
+        <header class="hud top-bar">
+            <div class="hud-left">
+                <p>TARGET: APOD // ASTRONOMY-PICTURE-OF-THE-DAY</p>
+                <p><span id="apodDate">DATE: STANDBY</span></p>
+            </div>
+            <div class="hud-center">
+                <img src="assets/nasa.svg" alt="NASA worm logotype" class="nasa-logo">
+            </div>
+            <div class="hud-right">
+                <p>INTERFACE: v1.0</p>
+                <p id="apodTitle">TITLE: STANDBY</p>
+            </div>
         </header>
 
-        <button id="fetchBtn" class="btn">Get Today's Picture</button>
-
-        <div id="loader" class="loading hidden">
-            <div class="spinner"></div>
-        </div>
-
-        <p id="error-message" class="error hidden">Sorry, couldn't fetch the data. Please try again later.</p>
-
-        <div id="content" class="content-card hidden">
-            <div id="mediaContainer" class="image-container">
-                <img id="apodImage" class="apod-image" alt="NASA Picture of the Day">
-                <div id="videoContainer" class="video-container">
-                    <iframe id="apodVideo" class="apod-video" allowfullscreen></iframe>
+        <main id="main-content" class="main-content">
+            <div id="loader" class="loading hidden">
+                <video autoplay loop muted playsinline class="loading-video">
+                    <source src="assets/nasa-loader.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <p id="error-message" class="error hidden">SIGNAL LOST. COULD NOT RETRIEVE DATA.</p>
+            
+            <div id="data-display-wrapper" class="data-display-wrapper hidden">
+                <div class="media-display-area glass-panel">
+                    <img id="apodImage" class="apod-media" alt="NASA Picture of the Day">
+                    <div id="videoContainer" class="apod-media video-container">
+                        <iframe id="apodVideo" class="apod-video" allowfullscreen title="NASA APOD Video"></iframe>
+                    </div>
+                </div>
+                <div id="explanation-container" class="explanation-container glass-panel">
+                    <h2 id="explanation-title"></h2>
+                    <p id="explanation-text"></p>
                 </div>
             </div>
-            <div class="content-info">
-                <h2 id="apodTitle" class="apod-title"></h2>
-                <p id="apodDate" class="apod-date"></p>
-                <p id="apodExplanation" class="apod-explanation"></p>
+        </main>
+
+        <footer class="hud bottom-bar">
+            <div class="hud-left">
+                <p>SYSTEM STATUS: <span class="active-text">ACTIVE</span></p>
             </div>
-        </div>
+            <div class="hud-center">
+                <h1 id="fetch-trigger" class="fetch-trigger">GENERATE</h1>
+            </div>
+            <div class="hud-right">
+                <p>ALL SYSTEMS NOMINAL</p>
+            </div>
+        </footer>
     </div>
 
-    <script src="config.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,3 +1,0 @@
-const CONFIG = {
-    NASA_API_KEY: 'WCfFxK9tWr1jNQGBU0Q1cSEGfFSsLX3eFyhwawKm'
-};

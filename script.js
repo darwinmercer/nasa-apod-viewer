@@ -1,55 +1,69 @@
-const content = document.querySelector('#content');
+const NASA_API_KEY = 'WCfFxK9tWr1jNQGBU0Q1cSEGfFSsLX3eFyhwawKm';
+
 const image = document.querySelector('#apodImage');
 const video = document.querySelector('#apodVideo');
 const videoContainer = document.querySelector('#videoContainer');
-const title = document.querySelector('#apodTitle');
-const date = document.querySelector('#apodDate');
-const explanation = document.querySelector('#apodExplanation');
+const backgroundVideo = document.querySelector('.background-video');
+const titleElement = document.querySelector('#apodTitle');
+const dateElement = document.querySelector('#apodDate');
 const errorMessage = document.querySelector('#error-message');
 const loader = document.querySelector('#loader');
-const button = document.querySelector('#fetchBtn');
+const fetchTrigger = document.querySelector('#fetch-trigger');
+const dataDisplayWrapper = document.querySelector('#data-display-wrapper');
+const explanationTitle = document.querySelector('#explanation-title');
+const explanationText = document.querySelector('#explanation-text');
 
-button.addEventListener('click', () => {
-    button.disabled = true;
-    loader.classList.remove('hidden');
-    errorMessage.classList.add('hidden');
-    content.classList.add('hidden');
+fetchTrigger.addEventListener('click', () => {
     getNasaData();
 });
 
-function getNasaData(){
-    const fetchPromise = fetch(`https://api.nasa.gov/planetary/apod?api_key=${CONFIG.NASA_API_KEY}`);
+function getNasaData() {
+    fetchTrigger.disabled = true;
+    fetchTrigger.classList.add('disabled');
+    loader.classList.remove('hidden');
+    backgroundVideo.classList.add('hidden');
+    errorMessage.classList.add('hidden');
+    dataDisplayWrapper.classList.add('hidden');
+    document.body.classList.add('grid-active');
 
-    fetchPromise
-        .then((response) => {
-            if(!response.ok){
+    fetch(`https://api.nasa.gov/planetary/apod?api_key=${NASA_API_KEY}`)
+        .then(response => {
+            if (!response.ok) {
                 throw new Error(`HTTP error: ${response.status}`);
             }
             return response.json();
         })
-        .then((data) => {
-            console.log(data);
-            title.textContent = data.title;
-            date.textContent = data.date;
-            explanation.textContent = data.explanation;
+        .then(data => {
+            titleElement.textContent = `TITLE: ${data.title}`;
+            dateElement.textContent = `DATE: ${data.date}`;
+            explanationTitle.textContent = data.title;
+            explanationText.textContent = data.explanation || "No detailed explanation available for this image.";
+            video.title = data.title;
 
-            if(data.media_type === 'image'){
+            const isImage = data.media_type === 'image';
+            if (isImage) {
+                image.src = data.hdurl || data.url;
                 image.classList.add('active');
                 videoContainer.classList.remove('active');
-                image.src = data.url;
             } else {
-                image.classList.remove('active');
-                videoContainer.classList.add('active');
                 video.src = data.url;
+                videoContainer.classList.add('active');
+                image.classList.remove('active');
             }
+
+            dataDisplayWrapper.classList.remove('hidden');
+
             loader.classList.add('hidden');
-            content.classList.remove('hidden');
-            button.disabled = false;
+            fetchTrigger.disabled = false;
+            fetchTrigger.classList.remove('disabled');
         })
-        .catch((error) => {
-            console.error('Error:', error);
-            loader.classList.add('hidden');
+        .catch(error => {
+            console.error(error);
             errorMessage.classList.remove('hidden');
-            button.disabled = false;
+            document.body.classList.remove('grid-active');
+
+            loader.classList.add('hidden');
+            fetchTrigger.disabled = false;
+            fetchTrigger.classList.remove('disabled');
         });
 }
