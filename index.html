@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Picture of the Day</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>NASA Picture of the Day</h1>
+        </header>
+
+        <button id="fetchBtn" class="btn">Get Today's Picture</button>
+
+        <div id="loader" class="loading hidden">
+            <div class="spinner"></div>
+        </div>
+
+        <p id="error-message" class="error hidden">Sorry, couldn't fetch the data. Please try again later.</p>
+
+        <div id="content" class="content-card hidden">
+            <div id="mediaContainer" class="image-container">
+                <img id="apodImage" class="apod-image" alt="NASA Picture of the Day">
+                <div id="videoContainer" class="video-container">
+                    <iframe id="apodVideo" class="apod-video" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="content-info">
+                <h2 id="apodTitle" class="apod-title"></h2>
+                <p id="apodDate" class="apod-date"></p>
+                <p id="apodExplanation" class="apod-explanation"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
