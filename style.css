@@ -72,6 +72,13 @@ body.grid-active::before {
     width: 80px;
     height: auto;
     filter: invert(90%);
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.nasa-logo:hover {
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
 }
 
 .active-text {
@@ -182,19 +189,22 @@ body.grid-active::before {
     letter-spacing: 10px;
     cursor: pointer;
     padding: 10px 20px;
-    border: 1px solid transparent;
     transition: all 0.3s ease;
     text-align: center;
 }
 
 .fetch-trigger:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    text-shadow: 
+        0 0 5px #4dff99,
+        0 0 10px #4dff99,
+        0 0 20px #4dff99;
 }
 
 .fetch-trigger.disabled {
     opacity: 0.4;
     cursor: not-allowed;
+    text-shadow: none;
 }
 
 .loading, .error {

@@ -1,5 +1,6 @@
 const NASA_API_KEY = 'WCfFxK9tWr1jNQGBU0Q1cSEGfFSsLX3eFyhwawKm';
 
+const nasaLogo = document.querySelector('.nasa-logo');
 const image = document.querySelector('#apodImage');
 const video = document.querySelector('#apodVideo');
 const videoContainer = document.querySelector('#videoContainer');
@@ -16,6 +17,24 @@ const explanationText = document.querySelector('#explanation-text');
 fetchTrigger.addEventListener('click', () => {
     getNasaData();
 });
+
+nasaLogo.addEventListener('click', resetToLandingPage);
+
+function resetToLandingPage() {
+    dataDisplayWrapper.classList.add('hidden');
+    errorMessage.classList.add('hidden');
+    loader.classList.add('hidden');
+
+    backgroundVideo.classList.remove('hidden');
+
+    document.body.classList.remove('grid-active');
+
+    titleElement.textContent = 'TITLE: STANDBY';
+    dateElement.textContent = 'DATE: STANDBY';
+
+    image.src = '';
+    video.src = '';
+}
 
 function getNasaData() {
     fetchTrigger.disabled = true;
